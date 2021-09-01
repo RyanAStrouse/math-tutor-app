@@ -1,23 +1,22 @@
+
 describe('random math app', () => {
     it('can make calculations', () => {
+		var firstnum = 0
+		var secondnum = 0
         cy.visit('/')
-        cy.get('.mat-card-content > div').children().eq(0).then(($firstnum) => {
-			const firstvalue = $firstnum.text()
-			cy.log(firstvalue)
+        cy.get('.mat-card-content span').eq(0).as('firstnum').then(($firstvalue) => {
+			firstnum = $firstvalue.text()
+			cy.log(firstnum)
+			cy.get('.mat-card-content span').eq(1).as('secondnum').then(($secondvalue) => {
+				secondnum = $secondvalue.text()
+				cy.log(secondnum)
+				var sum = parseInt(firstnum) + parseInt(secondnum)
+				cy.log(sum)
+				cy.get('.mat-card-content input').type(sum)
+				cy.get('.mat-button-wrapper').as('btn')
+				cy.get('@btn').click()
+			})
 		})
-		//cy.log(firstnum)
-        cy.get('.mat-card-content > div').children().eq(1).then(($secondnum) => {
-			const secondvalue = $secondnum.text()
-			cy.log(secondvalue)
-		})
-		cy.get('.mat-card-content > div').children().eq(2).then(($answer) => {
-			const sum = $firstvalue + $secondvalue
-			this.type(sum)
-		})
-		//cy.log(sum)
-		//cy.get('@answer').type(sum)
-        cy.get('.mat-button-wrapper').as('btn')
-        cy.get('@btn').click()
-        .findByTestId('total')
+		cy.get('#toast-container').should('contain', 'That\'s right! Try another one.')
     })
   })
