@@ -93,4 +93,9 @@ describe('random math app', () => {
             })
         })
     })
+    it('can verify button disabled without input', () => {
+        cy.visit('/')
+        cy.get(':button').as('btn')
+        cy.get('@btn').should('be.disabled')
+    })
   })
