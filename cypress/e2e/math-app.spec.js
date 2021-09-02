@@ -98,4 +98,22 @@ describe('random math app', () => {
         cy.get(':button').as('btn')
         cy.get('@btn').should('be.disabled')
     })
+	it('can verify button enabled with input', () => {
+        var firstnum = 0
+        var secondnum = 0
+        cy.visit('/')
+        cy.get('.mat-card-content span').eq(0).as('firstnum').then(($firstvalue) => {
+            firstnum = $firstvalue.text()
+            cy.log(firstnum)
+            cy.get('.mat-card-content span').eq(1).as('secondnum').then(($secondvalue) => {
+                secondnum = $secondvalue.text()
+                cy.log(secondnum)
+                var sum = parseInt(firstnum) + parseInt(secondnum)
+                cy.log(sum)
+                cy.get('.mat-card-content input').type(sum)
+            })
+        })
+        cy.get(':button').as('btn')
+        cy.get('@btn').should('be.enabled')
+    })
   })
